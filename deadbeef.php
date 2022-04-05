@@ -15,9 +15,6 @@ $lastfile = ($_REQUEST['name']) ? $_REQUEST['name'] : ((file_exists('lastfile'))
 <script src="manage.js?rev=<?=time();?>"></script>
 <script src="http://www.midijs.net/lib/midi.js"></script>
 <script>
-document.getElementById('mediaURI').onchange = function() {
-    set('lastfile', uri, true);
-}
 function get_uri_extension(uri) {
     return uri.split(/[#?]/)[0].split('.').pop().trim();
 }
@@ -58,7 +55,7 @@ function closePlayer(uri) {
 <p align="center">
 <input type="text" id="mediaURI" style="width:55%;position:relative;" placeholder="Please enter the mediafile URI" value="<?=$lastfile;?>" onkeydown="if (event.keyCode == 13) {
     openURI(mediaURI.value);
-}">
+}" onchange="set('lastfile', this.value, true);">
 <input type="button" class="actionButton" value=">" onclick="openURI(mediaURI.value);">
 <input type="button" class="actionButton" value="<" onclick="closePlayer(mediaURI.value);">
 <input type="button" class="actionButton" value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
