@@ -15,6 +15,9 @@ $lastfile = ($_REQUEST['name']) ? $_REQUEST['name'] : ((file_exists('lastfile'))
 <script src="manage.js?rev=<?=time();?>"></script>
 <script src="http://www.midijs.net/lib/midi.js"></script>
 <script>
+document.getElementById('mediaURI').onchange = function() {
+    set('lastfile', uri, true);
+}
 function get_uri_extension(uri) {
     return uri.split(/[#?]/)[0].split('.').pop().trim();
 }
