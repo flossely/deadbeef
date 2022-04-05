@@ -26,6 +26,7 @@ if ($reqfile != '') {
 <script>
 window.onload = function() {
     document.getElementById('mediaURI').focus();
+    set('lastfile', '<?=$lastfile;?>', true);
 }
 function get_uri_extension(uri) {
     return uri.split(/[#?]/)[0].split('.').pop().trim();
