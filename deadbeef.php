@@ -30,11 +30,21 @@ function defineFileFormat(uri) {
 }
 function openURI(uri) {
     if (defineFileFormat(uri) == 'video') {
-        playVideo(videoPlayer, uri+'?rev=<?=time();?>');
+        playVideo(mediaPlayer, uri+'?rev=<?=time();?>');
     } else if (defineFileFormat(uri) == 'midi') {
         playMIDI(uri+'?rev=<?=time();?>');
     } else {
-        playAudio(audioPlayer, uri+'?rev=<?=time();?>');
+        playAudio(mediaPlayer, uri+'?rev=<?=time();?>');
+    }
+    set('lastfile', uri, true);
+}
+function closePlayer(uri) {
+    if (defineFileFormat(uri) == 'video') {
+        pauseVideo(mediaPlayer, uri+'?rev=<?=time();?>');
+    } else if (defineFileFormat(uri) == 'midi') {
+        pauseMIDI(uri+'?rev=<?=time();?>');
+    } else {
+        pauseAudio(mediaPlayer, uri+'?rev=<?=time();?>');
     }
     set('lastfile', uri, true);
 }
@@ -47,14 +57,13 @@ function openURI(uri) {
     openURI(mediaURI.value);
 }">
 <input type="button" class="actionButton" value=">" onclick="openURI(mediaURI.value);">
-<input type="button" class="actionButton" value="<" onclick="pauseAudio(audioPlayer);">
+<input type="button" class="actionButton" value="<" onclick="closePlayer(mediaURI.value);">
 <input type="button" class="actionButton" value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
-<input type="button" class="actionButton" value="X" onclick="window.location.href = 'index.php';"><br>
-<audio id="audioPlayer" <?=$lastfile;?> controls autoplay>
+<input type="button" class="actionButton" value="X" onclick="window.location.href = 'index.php';">
 </p>
 </div>
 <div class='panel'>
-<video style="width:100%;height:100%;position:relative;" id="videoPlayer" src="<?=$lastfile;?>" controls autoplay>
+<video style="width:100%;height:100%;position:relative;" id="mediaPlayer" src="<?=$lastfile;?>" controls autoplay>
 </div>
 </body>
 </html>
