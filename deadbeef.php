@@ -1,5 +1,14 @@
 <?php
-$lastfile = ($_REQUEST['name']) ? $_REQUEST['name'] : ((file_exists('lastfile')) ? file_get_contents('lastfile') : 'bootup.flac');
+$reqfile = ($_REQUEST['name']) ? $_REQUEST['name'] : '';
+if ($reqfile != '') {
+    $lastfile = $reqfile;
+} else {
+    if (file_exists('lastfile')) {
+        $lastfile = file_get_contents('lastfile');
+    } else {
+        $lastfile = 'bootup.flac';
+    }
+}
 ?>
 <html>
 <head>
@@ -17,7 +26,6 @@ $lastfile = ($_REQUEST['name']) ? $_REQUEST['name'] : ((file_exists('lastfile'))
 <script>
 window.onload = function() {
     document.getElementById('mediaURI').focus();
-    document.getElementById('mediaURI').value = '<?=$lastfile;?>';
 }
 function get_uri_extension(uri) {
     return uri.split(/[#?]/)[0].split('.').pop().trim();
