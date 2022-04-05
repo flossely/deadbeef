@@ -1,0 +1,1 @@
+Clocks=||=sys.clock.png=||=window.location.href='clock.php';
