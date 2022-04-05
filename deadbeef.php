@@ -1,5 +1,5 @@
 <?php
-$lastfile = ($_REQUEST['file']) ? $_REQUEST['file'] : ((file_exists('lastfile')) ? file_get_contents('lastfile') : 'bootup.flac');
+$lastfile = ($_REQUEST['name']) ? $_REQUEST['name'] : ((file_exists('lastfile')) ? file_get_contents('lastfile') : 'bootup.flac');
 ?>
 <html>
 <head>
