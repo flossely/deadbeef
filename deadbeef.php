@@ -1,5 +1,5 @@
 <?php
-$lastfile = file_get_contents('lastfile');
+$lastfile = ($_REQUEST['file']) ? $_REQUEST['file'] : ((file_exists('lastfile')) ? file_get_contents('lastfile') : 'bootup.flac');
 ?>
 <html>
 <head>
@@ -53,7 +53,7 @@ function openURI(uri) {
 </p>
 </div>
 <div class='panel'>
-<video style="width:100%;height:100%;position:relative;" id="videoPlayer" controls>
+<video style="width:100%;height:100%;position:relative;" id="videoPlayer" src="<?=$lastfile;?>" controls autoplay>
 </div>
 <audio id="audioPlayer">
 </body>
