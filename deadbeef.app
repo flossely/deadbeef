@@ -1,1 +1,1 @@
-Clocks=||=sys.clock.png=||=window.location.href='clock.php';
+Deadbeef=||=sys.deadbeef.png=||=window.location.href='deadbeef.php';
