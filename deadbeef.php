@@ -49,12 +49,12 @@ function openURI(uri) {
 <input type="button" class="actionButton" value=">" onclick="openURI(mediaURI.value);">
 <input type="button" class="actionButton" value="<" onclick="pauseAudio(audioPlayer);">
 <input type="button" class="actionButton" value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
-<input type="button" class="actionButton" value="X" onclick="window.location.href = 'index.php';">
+<input type="button" class="actionButton" value="X" onclick="window.location.href = 'index.php';"><br>
+<audio id="audioPlayer" <?=$lastfile;?> controls autoplay>
 </p>
 </div>
 <div class='panel'>
 <video style="width:100%;height:100%;position:relative;" id="videoPlayer" src="<?=$lastfile;?>" controls autoplay>
 </div>
-<audio id="audioPlayer">
 </body>
 </html>
