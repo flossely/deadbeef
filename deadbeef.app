@@ -1,1 +1,1 @@
-Deadbeef=||=sys.deadbeef.png=||=window.location.href='deadbeef.php';
+Deadbeef|[1]|sys.deadbeef.png|[1]|window.location.href='deadbeef.php';
