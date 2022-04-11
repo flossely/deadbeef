@@ -1,0 +1,1 @@
+Deadbeef Online|[1]|sys.deadbeef.png|[1]|window.location.href='deadweb.php';

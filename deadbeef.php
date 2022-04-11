@@ -70,7 +70,7 @@ function closePlayer(uri) {
     openURI(mediaURI.value);
 }" onchange="set('lastfile', this.value, true);">
 <input type="button" class="actionButton" value=">" onclick="openURI(mediaURI.value);">
-<input type="button" class="actionButton" value="<" onclick="closePlayer(mediaURI.value);">
+<input type="button" class="actionButton" value="II" onclick="closePlayer(mediaURI.value);">
 <input type="button" class="actionButton" value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
 <input type="button" class="actionButton" value="X" onclick="window.location.href = 'index.php';">
 </p>
