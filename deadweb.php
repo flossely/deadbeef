@@ -47,6 +47,8 @@ Filename: <br>
 </p>
 <p align='center'>
 <input type="button" value="Launch" onclick="set('user.git.last', enterUser.value, true); set('repo.git.last', enterRepo.value, true); set('branch.git.last', enterBranch.value, true); set('filename.git.last', enterFilename.value, true); window.location.reload();">
+<input type="button" value="Update" onclick="get('i','','from','deadbeef','','flossely', false);">
+<input type="button" value="Exit" onclick="window.location.href = 'index.php';">
 </p>
 </div>
 </body>
