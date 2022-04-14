@@ -1,9 +1,12 @@
 <?php
-$lastOpenedUser = file_get_contents('user.git.last');
-$lastOpenedRepo = file_get_contents('repo.git.last');
-$lastOpenedBranch = file_get_contents('branch.git.last');
-$lastOpenedFilename = file_get_contents('filename.git.last');
-$playerUri = 'https://github.com/'.$lastOpenedUser.'/'.$lastOpenedRepo.'/blob/'.$lastOpenedBranch.'/'.$lastOpenedFilename.'?raw=true';
+if (file_exists($_REQUEST['name'])) {
+    $playfile = $_REQUEST['name'];
+    $playOpen = file_get_contents($playfile);
+    $playlist = explode('|[1]|', $playOpen);
+} else {
+    $dir = '.';
+    $list = str_replace($dir.'/','',(glob($dir.'/*.{pl,pls}', GLOB_BRACE)));
+}
 ?>
 <html>
 <head>
@@ -15,41 +18,34 @@ $playerUri = 'https://github.com/'.$lastOpenedUser.'/'.$lastOpenedRepo.'/blob/'.
 <script src="jquery.js?rev=<?=time();?>"></script>
 <script src="base.js?rev=<?=time();?>"></script>
 <script src="file.js?rev=<?=time();?>"></script>
-<script src="edit.js?rev=<?=time();?>"></script>
-<script src="manage.js?rev=<?=time();?>"></script>
-<script src="http://www.midijs.net/lib/midi.js"></script>
-<script>
-window.onload = function() {
-    playAudio(audioPlayer, '<?=$playerUri;?>');
-}
-</script>
 </head>
 <body>
 <div class='top'>
-<p align='center'><audio style="width:55%;position:relative;" id="audioPlayer" src="<?=$playerUri;?>" controls autoplay></p>
+<p align='center'>
+<?php if (file_exists($_REQUEST['name'])) { ?>
+<input type='button' class='actionButton' value="X" onclick="window.location.href = 'deadbeef.php';"> 
+<?php } else { ?>
+<input type='button' class='actionButton' value="X" onclick="window.location.href = 'index.php';"> 
+<?php } ?>
+<audio style="width:55%;position:relative;" id="audioPlayer" src="<?=$playerUri;?>" controls autoplay>
+</p>
 </div>
 <div class='panel'>
+<?php if (file_exists($_REQUEST['name'])) {
+foreach ($playlist as $key=>$part) {
+    $partExp = explode('|[2]|', $part);
+    $trackTitle = $partExp[0];
+    $trackUri = $partExp[1];
+?>
 <p align='center'>
-User: <br>
-<input type="text" id="enterUser" value="<?=$lastOpenedUser;?>" style="width:55%;position:relative;">
+<input type='button' style="width:90%;position:relative;" value="<?=$trackTitle;?>" onclick="playAudio(audioPlayer, '<?=$trackUri;?>');">
 </p>
+<?php }} else {
+foreach ($list as $key=>$value) { ?>
 <p align='center'>
-Repo: <br>
-<input type="text" id="enterRepo" value="<?=$lastOpenedRepo;?>" style="width:55%;position:relative;">
+<input type='button' style="width:90%;position:relative;" value="<?=$value;?>" onclick="window.location.href = 'deadbeef.php?name=<?=$value;?>';">
 </p>
-<p align='center'>
-Branch: <br>
-<input type="text" id="enterBranch" value="<?=$lastOpenedBranch;?>" style="width:55%;position:relative;">
-</p>
-<p align='center'>
-Filename: <br>
-<input type="text" id="enterFilename" value="<?=$lastOpenedFilename;?>" style="width:55%;position:relative;">
-</p>
-<p align='center'>
-<input type="button" value="Launch" onclick="set('user.git.last', enterUser.value, true); set('repo.git.last', enterRepo.value, true); set('branch.git.last', enterBranch.value, true); set('filename.git.last', enterFilename.value, true); window.location.reload();">
-<input type="button" value="Update" onclick="get('i','','from','deadbeef','','flossely', false);">
-<input type="button" value="Exit" onclick="window.location.href = 'index.php';">
-</p>
+<?php }} ?>
 </div>
 </body>
 </html>
