@@ -22,6 +22,7 @@ if (file_exists($_REQUEST['name'])) {
 <body>
 <div class='top'>
 <p align='center'>
+<input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);"> 
 <?php if (file_exists($_REQUEST['name'])) { ?>
 <input type='button' class='actionButton' value="X" onclick="window.location.href = 'deadbeef.php';"> 
 <?php } else { ?>
