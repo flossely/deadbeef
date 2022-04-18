@@ -1,5 +1,6 @@
 <?php
-$playlistUri = ($_REQUEST['uri']) ? hex2bin($_REQUEST['uri']) : '';
+$playlistUriHex = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
+$playlistUri = hex2bin($playlistUriHex);
 if ($playlistUri != '') {
     $currentPlaylistFile = file_get_contents($playlistUri);
     $currentPlaylist = explode(';', $currentPlaylistFile);
