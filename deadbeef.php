@@ -1,4 +1,6 @@
 <?php
+$playlists = file_get_contents('playlists');
+$playlistArr = explode('|[1]|', $playlists);
 $playlistUri = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
 if ($playlistUri != '') {
     $playlistFile = file_get_contents($playlistUri.'/playlist.pl?raw=true');
@@ -28,10 +30,14 @@ function openPlaylist(uri)
 <p align='center'>
 <select id='musicPlaylist' onchange="openPlaylist(musicPlaylist.options[musicPlaylist.selectedIndex].id);">
 <option>Current</option>
-<option id='https://github.com/eurohouse/botticelli/blob/classic'>Classical</option>
-<option id='https://github.com/eurohouse/botticelli/blob/modern'>Retro</option>
-<option id='https://github.com/eurohouse/orchestra/blob/classic'>Lounge</option>
-<option id='https://github.com/eurohouse/orchestra/blob/modern'>Chill</option>
+<?php
+foreach ($playlistArr as $key=>$item) {
+    $itemArr = explode('|[2]|', $item);
+    $itemTitle = $itemArr[0];
+    $itemUri = $itemArr[1];
+?>
+<option id="<?=$itemUri;?>"><?=$itemTitle;?></option>
+<?php } ?>
 </select>
 <input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
 <input type='button' class='actionButton' value="X" onclick="window.location.href = 'index.php';">
