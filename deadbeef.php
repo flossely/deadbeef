@@ -1,9 +1,8 @@
 <?php
-$playlistUriHex = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
-$playlistUri = hex2bin($playlistUriHex);
+$playlistUri = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
 if ($playlistUri != '') {
-    $currentPlaylistFile = file_get_contents($playlistUri);
-    $currentPlaylist = explode(';', $currentPlaylistFile);
+    $playlistFile = file_get_contents($playlistUri.'/playlist.pl?raw=true');
+    $currentPlaylist = explode(';', $playlistFile);
 }
 ?>
 <html>
@@ -20,7 +19,7 @@ if ($playlistUri != '') {
 <script>
 function openPlaylist(uri)
 {
-    window.location.href = 'deadbeef.php?uri=' + bin2hex(uri);
+    window.location.href = 'deadbeef.php?uri=' + uri;
 }
 </script>
 </head>
@@ -28,6 +27,7 @@ function openPlaylist(uri)
 <div class='top'>
 <p align='center'>
 <select id='musicPlaylist' onchange="openPlaylist(musicPlaylist.options[musicPlaylist.selectedIndex].id);">
+<option>Current</option>
 <option id='https://github.com/eurohouse/botticelli/blob/classic'>Classical</option>
 <option id='https://github.com/eurohouse/botticelli/blob/modern'>Retro</option>
 <option id='https://github.com/eurohouse/orchestra/blob/classic'>Lounge</option>
@@ -38,15 +38,15 @@ function openPlaylist(uri)
 </p>
 </div>
 <div class='panel'>
-<p align='center'>
 <?php
 if ($playlistUri != '') {
-foreach ($currentPlaylist as $key=>$item) {
-    $fullAudioUri = $playlistUri . '/' . $item . '?raw=true';
+foreach ($currentPlaylist as $key=>$value) {
+    $fullAudioUri = $playlistUri . '/' . $value . '?raw=true';
 ?>
-<input type='button' value="" onclick="playAudio(audioPlayer, '<?=$fullAudioUri;?>')">
-<?php }} ?>
+<p align='center'>
+<input type='button' style="width:90%;position:relative;" value="<?=$value;?>" onclick="playAudio(audioPlayer, '<?=$fullAudioUri;?>')">
 </p>
+<?php }} ?>
 </div>
 <audio id="audioPlayer">
 </body>
