@@ -1,11 +1,8 @@
 <?php
-if (file_exists($_REQUEST['name'])) {
-    $playfile = $_REQUEST['name'];
-    $playOpen = file_get_contents($playfile);
-    $playlist = explode('|[1]|', $playOpen);
-} else {
-    $dir = '.';
-    $list = str_replace($dir.'/','',(glob($dir.'/*.{pl,pls}', GLOB_BRACE)));
+$playlistUri = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
+if ($playlistUri != '') {
+    $currentPlaylistFile = file_get_contents($playlistUri);
+    $currentPlaylist = explode(';', $currentPlaylistFile);
 }
 ?>
 <html>
@@ -18,35 +15,38 @@ if (file_exists($_REQUEST['name'])) {
 <script src="jquery.js?rev=<?=time();?>"></script>
 <script src="base.js?rev=<?=time();?>"></script>
 <script src="file.js?rev=<?=time();?>"></script>
+<script src="edit.js?rev=<?=time();?>"></script>
+<script>
+function openPlaylist(uri)
+{
+    window.location.href = 'deadbeef.php?uri=' + bin2hex(uri);
+}
+</script>
 </head>
 <body>
 <div class='top'>
 <p align='center'>
-<input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);"> 
-<?php if (file_exists($_REQUEST['name'])) { ?>
-<input type='button' class='actionButton' value="X" onclick="window.location.href = 'deadbeef.php';"> 
-<?php } else { ?>
-<input type='button' class='actionButton' value="X" onclick="window.location.href = 'index.php';"> 
-<?php } ?>
-<audio style="width:55%;position:relative;" id="audioPlayer" src="<?=$playerUri;?>" controls autoplay>
+<select id='musicPlaylist' onchange="openPlaylist(musicPlaylist.options[musicPlaylist.selectedIndex].id);">
+<option id='https://github.com/eurohouse/botticelli/blob/classic'>Classical</option>
+<option id='https://github.com/eurohouse/botticelli/blob/modern'>Retro</option>
+<option id='https://github.com/eurohouse/orchestra/blob/classic'>Lounge</option>
+<option id='https://github.com/eurohouse/orchestra/blob/modern'>Chill</option>
+</select>
+<input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
+<input type='button' class='actionButton' value="X" onclick="window.location.href = 'index.php';">
 </p>
 </div>
 <div class='panel'>
-<?php if (file_exists($_REQUEST['name'])) {
-foreach ($playlist as $key=>$part) {
-    $partExp = explode('|[2]|', $part);
-    $trackTitle = $partExp[0];
-    $trackUri = $partExp[1];
+<p align='center'>
+<?php
+if ($playlistUri != '') {
+foreach ($currentPlaylist as $key=>$item) {
+    $fullAudioUri = $playlistUri . '/' . $item . '?raw=true';
 ?>
-<p align='center'>
-<input type='button' style="width:90%;position:relative;" value="<?=$trackTitle;?>" onclick="playAudio(audioPlayer, '<?=$trackUri;?>');">
-</p>
-<?php }} else {
-foreach ($list as $key=>$value) { ?>
-<p align='center'>
-<input type='button' style="width:90%;position:relative;" value="<?=$value;?>" onclick="window.location.href = 'deadbeef.php?name=<?=$value;?>';">
-</p>
+<input type='button' value="" onclick="playAudio(audioPlayer, '<?=$fullAudioUri;?>')">
 <?php }} ?>
+</p>
 </div>
+<audio id="audioPlayer">
 </body>
 </html>
