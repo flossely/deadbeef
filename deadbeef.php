@@ -14,10 +14,8 @@ if ($playlistUri != '') {
 <title>Deadbeef</title>
 <link rel="shortcut icon" href="sys.deadbeef.png?rev=<?=time();?>" type="image/x-icon">
 <link href="system.css?rev=<?=time();?>" rel="stylesheet">
-<script src="jquery.js?rev=<?=time();?>"></script>
-<script src="base.js?rev=<?=time();?>"></script>
-<script src="file.js?rev=<?=time();?>"></script>
-<script src="edit.js?rev=<?=time();?>"></script>
+<?php include 'base.incl.php'; ?>
+<?php include 'file.incl.php'; ?>
 <script>
 function openPlaylist(uri)
 {
