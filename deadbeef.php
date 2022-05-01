@@ -1,5 +1,5 @@
 <?php
-$playlists = file_get_contents('playlists');
+$playlists = file_get_contents('https://github.com/wholemarket/playlist/blob/main/playlists?raw=true');
 $playlistArr = explode('|[1]|', $playlists);
 $playlistUri = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
 if ($playlistUri != '') {
