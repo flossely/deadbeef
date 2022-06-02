@@ -34,7 +34,7 @@ function openPlaylist(name)
 foreach ($list as $key=>$value) {
     $playlistID = basename($value, '.pl');
 ?>
-<option id="<?=$value;?>"><?=$playlistID;?></option>
+<option id="<?=$value;?>"><?=ucfirst($playlistID);?></option>
 <?php } ?>
 </select>
 <input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
