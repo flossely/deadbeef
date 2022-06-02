@@ -1,10 +1,12 @@
 <?php
-$playlists = file_get_contents('https://github.com/wholemarket/playlist/blob/main/playlists?raw=true');
-$playlistArr = explode('|[1]|', $playlists);
-$playlistUri = ($_REQUEST['uri']) ? $_REQUEST['uri'] : '';
-if ($playlistUri != '') {
-    $playlistFile = file_get_contents($playlistUri.'/playlist.pl?raw=true');
-    $currentPlaylist = explode(';', $playlistFile);
+$dir = '.';
+$list = str_replace($dir.'/','',(glob($dir.'/*.pl')));
+if ($_REQUEST['name']) {
+    $playlistFile = $_REQUEST['name'];
+    $playlistOpen = file_get_contents($playlistFile);
+} else {
+    $playlistFile = '';
+    $playlistOpen = '';
 }
 ?>
 <html>
@@ -17,9 +19,9 @@ if ($playlistUri != '') {
 <?php include 'base.incl.php'; ?>
 <?php include 'file.incl.php'; ?>
 <script>
-function openPlaylist(uri)
+function openPlaylist(name)
 {
-    window.location.href = 'deadbeef.php?uri=' + uri;
+    window.location.href = 'deadbeef.php?name=' + name;
 }
 </script>
 </head>
@@ -29,12 +31,10 @@ function openPlaylist(uri)
 <select id='musicPlaylist' onchange="openPlaylist(musicPlaylist.options[musicPlaylist.selectedIndex].id);">
 <option>Current</option>
 <?php
-foreach ($playlistArr as $key=>$item) {
-    $itemArr = explode('|[2]|', $item);
-    $itemTitle = $itemArr[0];
-    $itemUri = $itemArr[1];
+foreach ($list as $key=>$value) {
+    $playlistID = basename($value, '.pl');
 ?>
-<option id="<?=$itemUri;?>"><?=$itemTitle;?></option>
+<option id="<?=$value;?>"><?=$playlistID;?></option>
 <?php } ?>
 </select>
 <input type='button' class='actionButton' value="U" onclick="get('i','','from','deadbeef','','flossely',false);">
@@ -43,12 +43,15 @@ foreach ($playlistArr as $key=>$item) {
 </div>
 <div class='panel'>
 <?php
-if ($playlistUri != '') {
-foreach ($currentPlaylist as $key=>$value) {
-    $fullAudioUri = $playlistUri . '/' . $value . '?raw=true';
+if ($playlistOpen != '') {
+    $playlistArr = explode('|[1]|', $playlistOpen);
+    foreach ($playlistArr as $key=>$part) {
+        $playlistDiv = explode('|[2]|', $part);
+        $playlistElemTitle = $playlistDiv[0];
+        $playlistElemURI = $playlistDiv[1];
 ?>
 <p align='center'>
-<input type='button' style="width:90%;position:relative;" value="<?=$value;?>" onclick="playAudio(audioPlayer, '<?=$fullAudioUri;?>')">
+<input type='button' style="width:90%;position:relative;" value="<?=$playlistElemTitle;?>" onclick="playAudio(audioPlayer, '<?=$playlistElemURI;?>')">
 </p>
 <?php }} ?>
 </div>
